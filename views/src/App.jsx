@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getAvg, getTopProducts, getTopCustomers, getSalesByDay, getHighValue, getMonthly } from './api.js';
+import './styles.css';
 
 const defaultItems = `[
   { "name": "Sample Item", "quantity": 2, "price": 19.99 }
@@ -76,13 +77,15 @@ function App() {
   };
 
   return (
-    <main style={containerStyle}>
-      <h1 style={{ marginBottom: 6 }}>Orders Business Rules Dashboard</h1>
-      <p style={small}>Place orders, advance them through the lifecycle, and view aggregated business metrics.</p>
+    <main style={containerStyle} className="app">
+      <div className="hero">
+        <h1 className="app-title">Orders Business Rules Dashboard</h1>
+        <p className="muted">Place orders, advance them through the lifecycle, and view aggregated business metrics.</p>
+      </div>
 
       <section style={row}>
-        <div style={card}>
-          <h3 style={title}>Quick Stats</h3>
+        <div style={card} className="card">
+          <h3 style={title} className="card-title">Quick Stats</h3>
           <StatRow>
             <div>
               <div style={{ fontSize: 20, fontWeight: 700 }}>{avg ? avg.avgValue.toFixed(2) : '—'}</div>
@@ -99,53 +102,49 @@ function App() {
           </StatRow>
 
           <h4 style={{ marginTop: 16 }}>Top products</h4>
-          <ul>
+          <ul className="list">
             {topProducts.map((p) => (
-              <li key={p.name}>{p.name} — {p.totalQuantity} units — ${p.totalRevenue.toFixed(2)}</li>
+              <li key={p.name} className="list-item">{p.name} <span className="muted">— {p.totalQuantity} units</span> <strong>${p.totalRevenue.toFixed(2)}</strong></li>
             ))}
           </ul>
         </div>
 
-        <div style={card}>
-          <h3 style={title}>Order actions are hidden</h3>
-          <p style={small}>The legacy order management endpoints (place/pay/ship/cancel/get) are not exposed by default. To enable them set `EXPOSE_LEGACY_ROUTES=true` for the server; if enabled they appear at `/orders/legacy/`.</p>
-        </div>
-      </section>
+      </section> 
 
       <section style={row}>
-        <div style={card}>
-          <h3 style={title}>Sales by day (last 7 days)</h3>
-          <ul>
+        <div style={card} className="card">
+          <h3 style={title} className="card-title">Sales by day (last 7 days)</h3>
+          <ul className="list">
             {salesByDay.map((s) => (
-              <li key={s.day}>{s.day}: ${s.totalRevenue.toFixed(2)} ({s.orders} orders)</li>
+              <li key={s.day} className="list-item">{s.day}: <strong>${s.totalRevenue.toFixed(2)}</strong> <span className="muted">({s.orders} orders)</span></li>
             ))}
           </ul>
         </div>
 
-        <div style={card}>
-          <h3 style={title}>High value orders (≥ $100)</h3>
-          <ul>
+        <div style={card} className="card">
+          <h3 style={title} className="card-title">High value orders (≥ $100)</h3>
+          <ul className="list">
             {highOrders.map((h) => (
-              <li key={h.id}>{h.id}: ${h.total.toFixed(2)}</li>
+              <li key={h.id} className="list-item">{h.id}: <strong>${h.total.toFixed(2)}</strong></li>
             ))}
           </ul>
         </div>
 
-        <div style={card}>
-          <h3 style={title}>Monthly summary</h3>
-          <ul>
+        <div style={card} className="card">
+          <h3 style={title} className="card-title">Monthly summary</h3>
+          <ul className="list">
             {monthly.map((m) => (
-              <li key={`${m.year}-${m.month}`}>{m.year}-{String(m.month).padStart(2, '0')}: ${m.totalRevenue.toFixed(2)} ({m.orders} orders)</li>
+              <li key={`${m.year}-${m.month}`} className="list-item">{m.year}-{String(m.month).padStart(2, '0')}: <strong>${m.totalRevenue.toFixed(2)}</strong> <span className="muted">({m.orders} orders)</span></li>
             ))}
           </ul>
         </div>
       </section>
 
-      <section style={card}>
-        <h3 style={title}>Top customers</h3>
-        <ul>
+      <section style={card} className="card">
+        <h3 style={title} className="card-title">Top customers</h3>
+        <ul className="list">
           {topCustomers.map((c, idx) => (
-            <li key={idx}>{c.user?.nombre || c.user?.email || c.user?.id}: ${c.totalSpent.toFixed(2)} ({c.orders} orders)</li>
+            <li key={idx} className="list-item">{c.user?.nombre || c.user?.email || c.user?.id}: <strong>${c.totalSpent.toFixed(2)}</strong> <span className="muted">({c.orders} orders)</span></li>
           ))}
         </ul>
       </section>

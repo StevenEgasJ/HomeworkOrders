@@ -25,7 +25,6 @@ This repository contains a minimal MVC-style backend (Express + MongoDB/Mongoose
    - GET /orders/stats/high-value?min=100 — orders above min value
    - GET /orders/stats/monthly-summary?months=6 — revenue/orders per month
 
-Legacy order action endpoints (place/pay/ship/cancel/get) have been removed from the project.
 4. Deploy: set env vars on Railway/Render (`MONGODB_URI`, `PORT`, `FRONTEND_ORIGIN`). Entrypoint: `npm start`.
 
 ## Frontend

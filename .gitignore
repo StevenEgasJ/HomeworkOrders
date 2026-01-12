@@ -1,0 +1,7 @@
+node_modules/
+views/node_modules/
+.env
+views/.env
+.DS_Store
+dist/
+views/dist/

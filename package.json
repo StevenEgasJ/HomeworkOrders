@@ -7,7 +7,8 @@
     "dev:server": "node --watch controllers/server.js",
     "dev:client": "npm run dev --prefix views",
     "start": "node controllers/server.js",
-    "client:build": "npm run build --prefix views",
+    "server:install": "npm install --production",
+    "client:build": "npm install --prefix views --production=false && npm run build --prefix views",
     "seed": "node scripts/seedUser.js"
   },
   "dependencies": {

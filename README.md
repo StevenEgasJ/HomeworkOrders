@@ -25,7 +25,17 @@ This repository contains a minimal MVC-style backend (Express + MongoDB/Mongoose
    - GET /orders/stats/high-value?min=100 — orders above min value
    - GET /orders/stats/monthly-summary?months=6 — revenue/orders per month
 
-4. Deploy: set env vars on Railway/Render (`MONGODB_URI`, `PORT`, `FRONTEND_ORIGIN`). Entrypoint: `npm start`.
+4. Deploy (two options):
+
+Option A — Single service on Render (server builds the client)
+- Build Command: `npm run client:build` (builds `views/dist` on the server)
+- Start Command: `npm start`
+- Env vars: `MONGODB_URI`, `PORT` (optional), `FRONTEND_ORIGIN` (optional)
+
+Option B — Split deploy (recommended): backend on Render, frontend on Vercel
+- Render (backend only): Build Command: `npm run server:install` (installs runtime deps only) and Start Command: `npm start` (do not run the client build on Render)
+- Vercel (frontend): point the project to the `views` folder, Build Command: `npm install && npm run build`, Output Directory: `dist`
+- Env vars: on Render set `MONGODB_URI` and `FRONTEND_ORIGIN=https://<your-vercel-app>.vercel.app`; on Vercel set `VITE_API_BASE_URL=https://<your-backend>.onrender.com`.
 
 ## Frontend
 
@@ -69,12 +79,22 @@ The frontend contains an interactive dashboard (Stats) that calls the server's b
 
 3) Deploy the server (Railway or Render)
 - Create a new project and connect your GitHub repo.
-- Set build command: `npm run client:build` (this builds `views/dist`) and start command: `npm start`.
-- Set environment variables in the service dashboard:
-  - `MONGODB_URI` = your Atlas connection string
-  - `PORT` = 4000 (or leave default)
-  - `FRONTEND_ORIGIN` = the URL of your frontend (set to allow CORS)
-- Deploy. The server will serve the built frontend from `views/dist`.
+
+Two common workflows:
+
+Option A — server builds the client (single service)
+- Build command: `npm run client:build` (this will install `views` deps and run the frontend build), Start: `npm start`
+- Advantage: single service that serves both API and static frontend.
+
+Option B — split deploy (recommended)
+- On Render (backend only): set Build Command to `npm ci --production` (installs runtime deps only) and Start Command to `npm start` — do **not** run the client build here.
+- On Vercel (frontend): point the project to the `views` folder (or import `views`), set Build Command to `npm install && npm run build` and Output Directory to `dist`.
+
+Set environment variables appropriately in each service:
+- On Render: `MONGODB_URI` (required), `PORT` (optional), and `FRONTEND_ORIGIN=https://<your-vercel-app>.vercel.app` (for CORS)
+- On Vercel: `VITE_API_BASE_URL=https://<your-backend>.onrender.com` (so the frontend knows where to call the API)
+
+Choose Option B for faster, more maintainable builds and clearer separation of concerns.
 
 4) Deploy the frontend (Vercel) — optional if serving from the server
 - Create a Vercel project and link to GitHub repo, or import the `views` folder only.

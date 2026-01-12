@@ -9,30 +9,10 @@ const handleResponse = async (res) => {
   return data;
 };
 
-export const getOrder = (id) => fetch(`${API_BASE}/orders/${id}`).then(handleResponse);
 
-export const placeOrder = (payload) =>
-  fetch(`${API_BASE}/orders/place`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
-  }).then(handleResponse);
-
-export const payOrder = (id, payload) =>
-  fetch(`${API_BASE}/orders/${id}/pay`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
-  }).then(handleResponse);
-
-export const shipOrder = (id, payload) =>
-  fetch(`${API_BASE}/orders/${id}/ship`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
-  }).then(handleResponse);
-
-export const cancelOrder = (id) =>
-  fetch(`${API_BASE}/orders/${id}/cancel`, {
-    method: 'POST',
-  }).then(handleResponse);
+export const getAvg = () => fetch(`${API_BASE}/orders/stats/average`).then(handleResponse);
+export const getTopProducts = (limit = 5) => fetch(`${API_BASE}/orders/stats/top-products?limit=${limit}`).then(handleResponse);
+export const getTopCustomers = (limit = 5) => fetch(`${API_BASE}/orders/stats/top-customers?limit=${limit}`).then(handleResponse);
+export const getSalesByDay = (days = 7) => fetch(`${API_BASE}/orders/stats/sales-by-day?days=${days}`).then(handleResponse);
+export const getHighValue = (min = 100) => fetch(`${API_BASE}/orders/stats/high-value?min=${min}`).then(handleResponse);
+export const getMonthly = (months = 6) => fetch(`${API_BASE}/orders/stats/monthly-summary?months=${months}`).then(handleResponse);

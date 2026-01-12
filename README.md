@@ -17,12 +17,15 @@ This repository contains a minimal MVC-style backend (Express + MongoDB/Mongoose
    npm install
    npm run dev:server
    ```
-3. Business action endpoints:
-   - POST /orders/place
-   - POST /orders/:id/pay
-   - POST /orders/:id/ship
-   - POST /orders/:id/cancel
-   - GET /orders/:id
+3. Business action endpoints (public):
+   - GET /orders/stats/average — average order value
+   - GET /orders/stats/top-products?limit=5 — most sold products
+   - GET /orders/stats/top-customers?limit=5 — highest-spending customers
+   - GET /orders/stats/sales-by-day?days=7 — last N days revenue
+   - GET /orders/stats/high-value?min=100 — orders above min value
+   - GET /orders/stats/monthly-summary?months=6 — revenue/orders per month
+
+Legacy order action endpoints (place/pay/ship/cancel/get) have been removed from the project.
 4. Deploy: set env vars on Railway/Render (`MONGODB_URI`, `PORT`, `FRONTEND_ORIGIN`). Entrypoint: `npm start`.
 
 ## Frontend
@@ -40,6 +43,14 @@ This repository contains a minimal MVC-style backend (Express + MongoDB/Mongoose
    npm run build
    ```
 4. When the server is started it serves `views/dist`.
+
+The frontend contains an interactive dashboard (Stats) that calls the server's business-rule endpoints:
+- Average order value: `GET /orders/stats/average`
+- Top products: `GET /orders/stats/top-products?limit=5`
+- Top customers: `GET /orders/stats/top-customers?limit=5`
+- Sales by day: `GET /orders/stats/sales-by-day?days=7`
+- High value orders: `GET /orders/stats/high-value?min=100`
+- Monthly summary: `GET /orders/stats/monthly-summary?months=6`
 
 ## Notes
 

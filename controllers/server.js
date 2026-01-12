@@ -16,6 +16,7 @@ app.use(morgan('dev'));
 app.get('/health', (_req, res) => res.json({ status: 'ok' }));
 app.use('/orders', orderRoutes);
 
+
 const staticDir = path.resolve('views/dist');
 app.use(express.static(staticDir));
 app.get('*', (_req, res) => res.sendFile(path.join(staticDir, 'index.html')));

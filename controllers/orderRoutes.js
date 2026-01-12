@@ -1,11 +1,13 @@
 import { Router } from 'express';
-import { placeOrder, payOrder, shipOrder, cancelOrder, getOrder } from './orderController.js';
+import { avgOrderValue, topProducts, topCustomers, salesByDay, highValueOrders, monthlySummary } from './orderStatsController.js';
 
 const router = Router();
-router.post('/place', placeOrder);
-router.post('/:id/pay', payOrder);
-router.post('/:id/ship', shipOrder);
-router.post('/:id/cancel', cancelOrder);
-router.get('/:id', getOrder);
+
+router.get('/stats/average', avgOrderValue);
+router.get('/stats/top-products', topProducts);
+router.get('/stats/top-customers', topCustomers);
+router.get('/stats/sales-by-day', salesByDay);
+router.get('/stats/high-value', highValueOrders);
+router.get('/stats/monthly-summary', monthlySummary);
 
 export default router;
